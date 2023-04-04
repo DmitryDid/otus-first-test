@@ -1,16 +1,19 @@
 package com.otus.pages;
 
 import com.otus.annotations.UrlPrefix;
-import com.otus.pageobject.PageObject;
+import com.otus.pageobject.AbsPageObject;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.Assertions;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-public abstract class BasePage<T> extends PageObject {
+public abstract class AbsBasePage<T> extends AbsPageObject {
 
-    public BasePage(WebDriver driver) {
+    public AbsBasePage(WebDriver driver) {
         super(driver);
     }
 
@@ -19,7 +22,20 @@ public abstract class BasePage<T> extends PageObject {
         return (T) page(getClass());
     }
 
-    public <T> T page(Class<T> clazz) {
+    public T checkHeader(String text) {
+        Assertions.assertEquals(text, driver.findElement(By.cssSelector("h1")).getText());
+        return (T) this;
+    }
+
+    public T complexClick(WebElement element) {
+        standardWaiter.waitForElementVisible(element);
+        standardWaiter.waitForElementClickable(element);
+        action.moveToElement(element).perform();
+        element.click();
+        return (T) this;
+    }
+
+    private <T> T page(Class<T> clazz) {
         try {
             Constructor<T> constructor = clazz.getConstructor(WebDriver.class);
             return clazz.cast(constructor.newInstance(driver));

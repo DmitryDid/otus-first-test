@@ -26,12 +26,23 @@ public class StandardWaiter implements WaiterInt {
         }
     }
 
-    // todo: использовать или удалить
+    public boolean waitForElementClickable(WebElement element) {
+        return waitForCondition(ExpectedConditions.elementToBeClickable(element));
+    }
+
     public boolean waitForElementVisible(WebElement element) {
         return waitForCondition(ExpectedConditions.visibilityOf(element));
     }
 
     public boolean waitForElementNotVisible(WebElement element) {
         return waitForCondition(ExpectedConditions.invisibilityOf(element));
+    }
+
+    public void easySleep(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

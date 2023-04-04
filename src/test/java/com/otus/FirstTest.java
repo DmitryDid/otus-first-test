@@ -1,12 +1,15 @@
 package com.otus;
 
 import com.otus.annotations.Driver;
-import com.otus.components.FavouriteCourses;
+import com.otus.data.ConditionData;
 import com.otus.extentions.UIExtension;
+import com.otus.pages.CatalogPage;
+import com.otus.pages.CoursePage;
 import com.otus.pages.MainPage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
+
 
 @ExtendWith(UIExtension.class)
 public class FirstTest {
@@ -15,24 +18,34 @@ public class FirstTest {
     public WebDriver driver;
 
     @Test
-    public void popularCourseCheck() {
-        new MainPage(driver).open();
-        new FavouriteCourses(driver)
-                .clickOnTheEarliest();
-        // получить список популярных курсов
-        // фильтруем по названию
-        // фильтруем по раннему позднему
-        // работаем мышью
-        // подсвечиваем элемент перед, после убираем подсветку .. переопределить метод клик
+    public void chooseLateJavaCourse() {
+        new MainPage(driver)
+                .open()
+                .agreeCookies()
+                .checkHeader("Авторские онлайн‑курсы для профессионалов")
+                .openLessonsCatalog();
+        new CatalogPage(driver)
+                .checkHeader("Каталог")
+                .filterCoursesByText("java")
+                .agreeCookies()
+                .chooseCourseByCondition(ConditionData.LATEST);
+        new CoursePage(driver)
+                .checkHeader("Разработчик на Spring Framework");
     }
 
     @Test
-    public void specializationCheck() {
-        new MainPage(driver).open();
-    }
-
-    @Test
-    public void recommendationCheck() {
-        new MainPage(driver).open();
+    public void chooseAnEarlyJavaCourse() {
+        new MainPage(driver)
+                .open()
+                .agreeCookies()
+                .checkHeader("Авторские онлайн‑курсы для профессионалов")
+                .openLessonsCatalog();
+        new CatalogPage(driver)
+                .checkHeader("Каталог")
+                .filterCoursesByText("java")
+                .agreeCookies()
+                .chooseCourseByCondition(ConditionData.EARLIEST);
+        new CoursePage(driver)
+                .checkHeader("Специализация Java-разработчик");
     }
 }

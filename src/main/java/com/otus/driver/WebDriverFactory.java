@@ -1,8 +1,8 @@
 package com.otus.driver;
 
+import com.otus.driver.impl.ChromeWebDriver;
 import com.otus.exceptions.DriverTypeNotSupported;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -25,7 +25,7 @@ public class WebDriverFactory {
             }
             case "chrome": {
                 WebDriverManager.chromedriver().setup();
-                return new EventFiringWebDriver(new ChromeDriver());
+                return new EventFiringWebDriver(new ChromeWebDriver().newDriver());
             }
             default:
                 throw new DriverTypeNotSupported(this.browserType);
