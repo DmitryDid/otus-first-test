@@ -16,7 +16,6 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class UIExtension implements BeforeEachCallback, AfterEachCallback {
 
