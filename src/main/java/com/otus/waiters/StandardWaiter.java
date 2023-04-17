@@ -109,10 +109,6 @@ public class StandardWaiter implements WaiterInt {
         return waitForCondition(ExpectedConditions.visibilityOf(element));
     }
 
-    public boolean waitForElementNotVisible(WebElement element) {
-        return waitForCondition(ExpectedConditions.invisibilityOf(element));
-    }
-
     public void easySleep(long millis) {
         try {
             Thread.sleep(millis);
