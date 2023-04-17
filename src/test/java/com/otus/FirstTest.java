@@ -60,6 +60,6 @@ public class FirstTest {
                 .agreeCookies()
                 .chooseCourseByCondition(ConditionData.EARLIEST);
         new CoursePage(driver)
-                .checkHeader("Специализация Java-разработчик");
+                .checkHeader("Java Developer. Professional");
     }
 }
